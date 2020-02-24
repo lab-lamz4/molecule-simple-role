@@ -1,0 +1,22 @@
+---
+- name: Choose platform based task
+  include_tasks: '{{ platform }}'
+  with_first_found:
+    - '{{ ansible_distribution }}/requirements.yml'
+    - not-supported.yml
+  loop_control:
+    loop_var: platform
+
+- name: Create directory for info.txt
+  file:
+    path: "{{ os_info_path }}"
+    state: directory
+    mode: '0755'
+  become: true
+
+- name: Write file about system information
+  template:
+    src: info.txt.j2
+    dest: "{{ os_info_path }}/info.txt"
+    mode: '0644'
+  become: true
