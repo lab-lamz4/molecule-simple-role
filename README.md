@@ -85,6 +85,54 @@ sudo apt-get install virtualbox-6.1
 sudo /sbin/vboxconfig
 ```
 
+## Run all tests and delete an environment
 
+```bash
+cd project/molecule-simple-role
+```
 
+```bash
+molecule test
+```
 
+## Debug 
+
+```bash
+cd project/molecule-simple-role
+```
+
+### Run tests without deleting an environment
+
+```bash
+molecule test --destroy never
+```
+
+### Get shell in our environment virtual machines 
+
+```bash
+molecule login -s default -h ubuntu18
+```
+
+or
+
+```bash
+molecule login -s default -h centos7
+```
+
+### Run playbook again, do something, and run again ...
+
+```bash
+molecule converge
+```
+
+### Run verify tests
+
+```bash
+molecule verfy
+```
+
+### When all was fixed, destroy infrastructure.
+
+```bash
+molecule destroy
+```

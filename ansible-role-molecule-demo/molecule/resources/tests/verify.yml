@@ -1,9 +1,16 @@
 ---
-# This is an example playbook to execute Ansible tests.
-
 - name: Verify
   hosts: all
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+
+    - name: Check cowsay
+      command: cowsay --version
+      register: cowsay_ver_cmd
+
+    - name: Debug cowsay ver
+      debug:
+        var: cowsay_ver_cmd.stdout
+
+    - name: Assert that cowsay ver is present
+      assert:
+        that: "'2.0' in cowsay_ver_cmd.stdout"
